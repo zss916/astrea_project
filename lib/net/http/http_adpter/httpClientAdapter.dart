@@ -1,0 +1,18 @@
+import 'dart:io';
+
+import 'package:dio/io.dart';
+
+IOHttpClientAdapter httpAdapter = IOHttpClientAdapter(
+  validateCertificate: (cert, host, port) {
+    return true;
+  },
+);
+
+class AppHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
